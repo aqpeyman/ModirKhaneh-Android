@@ -66,7 +66,22 @@ private fun HomeScreen(repository: UnitRepository) {
         launch { repository.observeExpenses().collect { expenses = it } }
     }
     fun reportError(t: Throwable) { scope.launch { snackbar.showSnackbar(t.message ?: "عملیات انجام نشد") } }
-    Scaffold(topBar = { TopAppBar(title = { Text("مدیرخانه") }, subtitle = { Text("مدیریت ساختمان؛ ذخیره‌سازی محلی") }) }, snackbarHost = { SnackbarHost(snackbar) }) { padding ->
+    Scaffold(
+    topBar = {
+        TopAppBar(
+            title = {
+                Column {
+                    Text("مدیرخانه")
+                    Text(
+                        "مدیریت ساختمان؛ ذخیره‌سازی محلی",
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+            }
+        )
+    },
+    snackbarHost = { SnackbarHost(snackbar) }
+) { padding ->
         Column(Modifier.fillMaxSize().padding(padding).padding(horizontal = 12.dp)) {
             Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                 listOf("خانه", "ساکنین", "شارژ", "پرداخت", "هزینه‌ها", "گزارش‌ها", "دستیار").forEach { label ->
